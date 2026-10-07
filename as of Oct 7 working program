@@ -1,0 +1,146 @@
+/******************************************************************************
+# Author:           Crystal Price
+# Assignment:       Descuson 3 (CS161A)
+# Date:             10/1/2026 to 10/6/2026
+# Description:      calulate a total price with yes no ancers
+# Input:            veacale
+#                   number of Aults
+#                   number of Seniors
+#                   number of Youth
+#                   number of Bikes
+# Output:           toal for cost for the fair
+# Sources:          google how to make a tabel& report 2 decmals places
+#******************************************************************************/
+#include <iostream>
+#include <iomanip>
+#include <list>
+#include <algorithm> // Required for std::replace
+struct Item {
+    std::string name;
+    std::string unit;
+    double value;
+};
+
+int main()
+{
+    //Variables
+    int TotalAdults=0;
+    int TotalSinor_Disability=0;
+    int TotalYouth=0;
+    float TotalCost=0;
+    int TotalBike=0;
+    bool TotalCars= false;
+    float TotalP=0;
+    int Driver=0;
+    float TotalPTeansport=0;
+    float ToFree=0;
+    //constants
+    float CostPAdult=14.95;
+    float CostPSenior_Disability=7.40;
+    float CostPYouth=5.55;
+    float CostPCar=57.90;
+    float CostPBike=4.00;
+    // Define column widths
+    int FareDescription_width= 30;
+    int Ticket$_width = 9;
+   //start of program
+    std::string intput;
+    std::cout<<"Welcome to the Washington State Ferries Fare Calculator!"<<std::endl<<std::endl;
+
+    //print the costs of items
+        // Print table header
+    std::cout << std::left << std::setw(41) << "Fare Description" 
+              << std::right << std::setw(16) << "Ticket $" << "\n";
+    std::cout << "------------------------------------------------------------\n";
+
+    // fixed and setprecision(2) force exactly 2 decimal places
+    std::cout << std::fixed << std::setprecision(2);
+
+
+    // Print table rows with a $ in front of the variable
+    std::cout << std::left << std::setw(41) << "Vehicle Under 14' & Driver" 
+              << std::right << std::setw(10) << "$" << CostPCar << "\n";
+              
+    std::cout << std::left << std::setw(41) << "Adult (age 19 - 64)" 
+              << std::right << std::setw(10) << "$" << CostPAdult << "\n";
+              
+    std::cout << std::left << std::setw(41) << "Senior (age 65 & over) / Disability" 
+              << std::right << std::setw(10) << "$" << CostPSenior_Disability << "\n";
+
+    std::cout << std::left << std::setw(41) << "Youth (age 6 - 18)" 
+              << std::right << std::setw(10) << "$" << CostPYouth << "\n";
+
+    
+    std::cout << std::left << std::setw(41) << "Bicycle Surcharge (included with Vehicle)" 
+              << std::right << std::setw(10) << "$" << CostPBike << "\n";
+     std::cout <<std::endl;  
+   //tests in tables
+   
+
+     //Car Check start
+    std::cout << "Are you riding a vehicle on the Ferry (Y/N): "; // Prompt the user
+    std::cin >> intput;
+   if (intput == "y" || intput == "yes" || intput == "Y" || intput == "YES")
+   {
+        TotalCars= true;
+        std::cout << "What is the age of your Driver?: ";
+        std::cin >> Driver;
+        if (Driver<16) 
+                { 
+                std::cout << "Only licenced indvigels can drive be the drivers purments do not count"<<std::endl; 
+                std::cout << "Please Try again later"<<std::endl;
+                 return 0;
+                }
+        else if(Driver>= 19 & Driver <= 64)
+                {TotalPTeansport= CostPCar-CostPAdult;}
+        else if(Driver>=65)
+                {TotalPTeansport= CostPCar-CostPSenior_Disability;}
+        else if(Driver<=18)
+                {TotalPTeansport= CostPCar-CostPYouth;}
+        else
+        {
+            std::cout << "Not a valid input. Please Try again later"<<std::endl;
+            std::cout <<"Thank you for using Washington State Ferries Fare Calculator!" << std::endl;
+                 return 0;
+        }
+    }
+    else if (intput == "N" || intput == "n" || intput == "no" || intput == "No")
+    {
+        TotalCars= false;
+        std::cout << "How many Bikes? ";
+        std::cin >> TotalBike; 
+        TotalPTeansport=TotalBike*CostPBike;
+    }
+    else
+    {
+        std::cout<< "Error!! Invalid answer!! Please try again later!!!"<<std::endl;
+        std::cout <<"Thank you for using Washington State Ferries Fare Calculator!" << std::endl;
+        return 0;
+    }
+    std::cout <<std::endl;  
+    //Counts
+    std::cout << "How many Adults(19-64)?";
+    std::cin >> TotalAdults; 
+    std::cout << "How many Seniors/Disability? ";
+    std::cin >> TotalSinor_Disability;
+    std::cout << "How many Youth? ";
+    std::cin >> TotalYouth; 
+    std::cout <<std::endl;  
+
+    TotalP=(TotalYouth*CostPYouth)+(TotalSinor_Disability*CostPSenior_Disability)+CostPAdult*(TotalAdults)+TotalPTeansport;
+    std::cout <<"Your Total $"<<TotalP << std::endl << std::endl;
+  
+    if (TotalP<100)
+    {
+        ToFree=100-TotalP;
+        std::cout <<"If you spend $"<< ToFree<< " more, you are eligible for a free adult ticket for the next trip." << std::endl<< std::endl;
+    }
+    else 
+    {
+          std::cout <<"You qualify for one free adult ticket for the next trip! Please show your receipt to get re-inbersed." << std::endl << std::endl;
+    }
+      std::cout <<"Thank you for using Washington State Ferries Fare Calculator!" << std::endl;
+    //End program
+    return 0;
+}
+
